@@ -1,7 +1,9 @@
 import popupImage from './gallery.js';
 const galleryEl = document.querySelector('.js-gallery');
+const closeBtn = document.querySelector('[data-action="close-lightbox"]');
 
 galleryEl.addEventListener('click', onOpenPopup);
+closeBtn.addEventListener('click', onClosePopup);
 
 function onOpenPopup(event) {
     event.preventDefault();
@@ -22,4 +24,10 @@ function openImageInPopup(source) {
             document.querySelector('.lightbox__image').alt = description;
         }
     });
+}
+
+function onClosePopup() {
+    document.querySelector('.js-lightbox').classList.remove('is-open');
+    document.querySelector('.lightbox__image').removeAttribute('src');
+    document.querySelector('.lightbox__image').removeAttribute('alt');
 }
