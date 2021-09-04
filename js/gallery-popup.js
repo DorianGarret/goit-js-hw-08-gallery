@@ -9,50 +9,42 @@ const refs = {
 
 refs.galleryEl.addEventListener('click', onOpenPopup);
 refs.closeBtn.addEventListener('click', onClosePopup);
-refs.overlay.addEventListener('click', onBackdropClick);
+refs.overlay.addEventListener('click', onClosePopup);
 
 function onOpenPopup(event) {
     event.preventDefault();
 
+    const IMG = 'img';
+
+    if (event.target.localName !== IMG) {
+        return;
+    }
+
+    refs.lightbox.classList.toggle('is-open');
+
     window.addEventListener('keydown', onEscKeyPress);
     window.addEventListener('keydown', onKeyPressChangingImg);
 
-    const IMG = 'img';
-
-    if (event.target.localName === IMG) {
-        refs.lightbox.classList.add('is-open');
-    }
-
-    openImageInPopup(event.target.dataset.source);
+    openImageInPopup(event.target);
 }
 
 function openImageInPopup(source) {
-    return popupImage.filter(({ original, description }) => {
-        if (original === source) {
-            refs['lightbox-img'].src = original;
-            refs['lightbox-img'].alt = description;
-        }
-    });
+    refs['lightbox-img'].src = source.dataset.source;
+    refs['lightbox-img'].alt = source.alt;
 }
 
 function onClosePopup() {
     window.removeEventListener('keydown', onEscKeyPress);
     window.removeEventListener('keydown', onKeyPressChangingImg);
 
-    refs.lightbox.classList.remove('is-open');
-    refs['lightbox-img'].removeAttribute('src');
-    refs['lightbox-img'].removeAttribute('alt');
+    refs.lightbox.classList.toggle('is-open');
+    refs['lightbox-img'].src = '';
+    refs['lightbox-img'].alt = '';
 }
 
 function onEscKeyPress(event) {
     const ESC_KEY_CODE = 'Escape';
     if (event.code === ESC_KEY_CODE) {
-        onClosePopup();
-    }
-}
-
-function onBackdropClick(event) {
-    if (event.target === event.currentTarget) {
         onClosePopup();
     }
 }

@@ -6,12 +6,13 @@ galleryContainer.insertAdjacentHTML('beforeend', getMarkup(galerry));
 
 function getMarkup(galerry) {
     return galerry
-        .map(({ preview, original, description }) => {
+        .map(({ preview, original, description }, index) => {
             return `
             <li class="gallery__item">
               <a class="gallery__link" href="${original}">
                 <img class="gallery__image" src="${preview}"
                 data-source="${original}"
+                data-index="${index}"
                 alt="${description}"/>
               </a>
             </li>`;
