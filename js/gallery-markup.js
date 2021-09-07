@@ -12,7 +12,6 @@ function getMarkup(galerry) {
               <a class="gallery__link" href="${original}">
                 <img class="gallery__image" src="${preview}"
                 data-source="${original}"
-                data-index="${index}"
                 alt="${description}"/>
               </a>
             </li>`;

@@ -49,26 +49,28 @@ function onEscKeyPress(event) {
     }
 }
 
+let currentIndex = 0;
+
 function onKeyPressChangingImg(event) {
     const ARROW_KEY_CODE = {
         ARROW_LEFT: 'ArrowLeft',
         ARROW_RIGHT: 'ArrowRight',
     };
 
-    switch (event.code) {
-        case ARROW_KEY_CODE.ARROW_RIGHT:
-            showNextSlide(ARROW_KEY_CODE.ARROW_RIGHT);
-            break;
-        case ARROW_KEY_CODE.ARROW_LEFT:
-            showPrevSlide(ARROW_KEY_CODE.ARROW_LEFT);
-            break;
+    if (event.code === ARROW_KEY_CODE.ARROW_RIGHT) {
+        currentIndex += 1;
+        if (currentIndex >= popupImage.length) {
+            currentIndex = 0;
+        }
     }
-}
 
-function showNextSlide(right) {
-    return console.log(right);
-}
+    if (event.code === ARROW_KEY_CODE.ARROW_LEFT) {
+        currentIndex -= 1;
+        if (currentIndex < 0) {
+            currentIndex = popupImage.length - 1;
+        }
+    }
 
-function showPrevSlide(left) {
-    return console.log(left);
+    refs['lightbox-img'].src = popupImage[currentIndex].original;
+    refs['lightbox-img'].alt = popupImage[currentIndex].description;
 }
